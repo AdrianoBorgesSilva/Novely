@@ -19,6 +19,70 @@
 *.tar.gz
 *.rar
 
-# virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
+# Virtual machine crash logs
 hs_err_pid*
 replay_pid*
+
+# Maven
+target/
+!.mvn/wrapper/maven-wrapper.jar
+!**/src/main/**/target/
+!**/src/test/**/target/
+
+# IDE Files
+## STS
+.apt_generated
+.classpath
+.factorypath
+.project
+.settings
+.springBeans
+.sts4-cache
+
+## IntelliJ IDEA
+.idea/
+*.iws
+*.iml
+*.ipr
+
+## NetBeans
+/nbproject/private/
+/nbbuild/
+/dist/
+/nbdist/
+/.nb-gradle/
+build/
+!**/src/main/**/build/
+!**/src/test/**/build/
+
+## VS Code
+.vscode/
+
+# -------------------------------
+# Arquivos Sensíveis (NÃO COMMITAR)
+# -------------------------------
+# Certificados SSL
+*.p12
+*.keystore
+*.jks
+*.pfx
+
+# Variáveis de ambiente
+.env
+.env.*
+!.env.example
+
+# Configurações (se contiverem dados sensíveis)
+#application.properties
+#application-*.properties
+
+# Logs e arquivos temporários
+logs/
+*.log.*
+tmp/
+temp/
+dump/
+
+# Arquivos de sistema
+.DS_Store
+Thumbs.db
