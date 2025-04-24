@@ -65,11 +65,13 @@ public class ChapterService {
         
         if (chapterUpdateDTO.getTitle() != null) {
             chapter.setTitle(chapterUpdateDTO.getTitle());
+        }
         
-        }else if (chapterUpdateDTO.getContent() != null) {
+        if (chapterUpdateDTO.getContent() != null) {
             chapter.setContent(chapterUpdateDTO.getContent());
+        }
         
-        }else if (chapterUpdateDTO.getChapterNumber() != null) {
+        if (chapterUpdateDTO.getChapterNumber() != null) {
             chapter.setChapterNumber(chapterUpdateDTO.getChapterNumber());
         }
   

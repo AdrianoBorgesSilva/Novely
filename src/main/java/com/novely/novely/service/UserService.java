@@ -82,7 +82,9 @@ public class UserService {
         if (userUpdateDTO.getName() != null) {
             user.setName(userUpdateDTO.getName());
         
-        }else if (userUpdateDTO.getAvatarUrl() != null) {
+        }
+        
+        if (userUpdateDTO.getAvatarUrl() != null) {
             user.setAvatarUrl(userUpdateDTO.getAvatarUrl());
         }
         
@@ -167,11 +169,13 @@ public class UserService {
 
         if (user.getFavorites().contains(novelId)) {
             throw new FavoritesException("Novel already in favorites");
+        } 
         
-        } else if (user.getFavorites().size() >= 20) {
+        if (user.getFavorites().size() >= 20) {
             throw new FavoritesException("Max number of favorites reached");
+        } 
         
-        } else if (user.getSuperFavorites().contains(novelId)) {
+        if (user.getSuperFavorites().contains(novelId)) {
             throw new FavoritesException("Novel is in super favorites");
         }
 
@@ -210,12 +214,14 @@ public class UserService {
         Novel novel = novelService.findById(novelId);
 
         if (user.getSuperFavorites().contains(novelId)) {
-            throw new FavoritesException("Novel already in super favorites");
+            throw new FavoritesException("Novel already in super favorites"); 
+        }
         
-        } else if (user.getSuperFavorites().size() >= 5) {
+        if (user.getSuperFavorites().size() >= 5) {
             throw new FavoritesException("Max number of super favorites reached");
+        } 
         
-        } else if (user.getFavorites().contains(novelId)) {
+        if (user.getFavorites().contains(novelId)) {
             throw new FavoritesException("Novel is in favorites");
         }
 

@@ -55,11 +55,13 @@ public class NovelService {
         
         if (novelUpdateDTO.getTitle() != null) {
             novel.setTitle(novelUpdateDTO.getTitle());
+        }
         
-        }else if (novelUpdateDTO.getDescription() != null) {
+        if (novelUpdateDTO.getDescription() != null) {
             novel.setDescription(novelUpdateDTO.getDescription());
+        }
         
-        }else if (novelUpdateDTO.getGenre() != null) {
+        if (novelUpdateDTO.getGenre() != null) {
             novel.setGenre(novelUpdateDTO.getGenre());
         }
 
