@@ -7,9 +7,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 
+import com.novely.novely.domain.Chapter;
+import com.novely.novely.domain.Comment;
 import com.novely.novely.domain.Novel;
+import com.novely.novely.domain.Rating;
+import com.novely.novely.dto.ChapterCreateDTO;
+import com.novely.novely.dto.CommentCreateDTO;
 import com.novely.novely.dto.NovelCreateDTO;
 import com.novely.novely.dto.NovelUpdateDTO;
+import com.novely.novely.dto.RatingCreateDTO;
 import com.novely.novely.exception.ObjectNotFoundException;
 import com.novely.novely.exception.UnauthorizedActionException;
 import com.novely.novely.repository.NovelRepository;
@@ -27,12 +33,32 @@ public class NovelService {
     @Autowired
     ChapterService chapterService;
 
+    @Lazy
+    @Autowired
+    CommentService commentService;
+
+    @Lazy
+    @Autowired
+    RatingService ratingService;
+
     public List<Novel> findAll() {
         return novelRepository.findAll();
     }
 
     public Novel findById(String id) {
         return novelRepository.findById(id).orElseThrow(() -> new ObjectNotFoundException("Novel not found"));
+    }
+
+    public List<Chapter> findChaptersFromNovel(String novelId) {
+        return chapterService.findByNovelId(novelId);
+    }
+
+    public List<Comment> findCommentsFromNovel(String novelId) {
+        return commentService.findByNovelId(novelId);
+    }
+
+    public List<Rating> findRatingsFromNovel(String novelId) {
+        return ratingService.findByNovelId(novelId);
     }
 
     public Novel createNovel(NovelCreateDTO novelCreateDTO, String authorId){
@@ -44,6 +70,18 @@ public class NovelService {
 
         return novel;
     } 
+
+    public Chapter createChapter(ChapterCreateDTO chapterCreateDTO, String novelId, String userId) {
+        return chapterService.createChapter(chapterCreateDTO, novelId, userId);
+    }
+
+    public Comment createComment(CommentCreateDTO commentCreateDTO, String authorId, String novelId){
+        return commentService.createComment(commentCreateDTO, authorId, novelId);
+    }
+
+    public Rating createRating(RatingCreateDTO ratingCreateDTO, String novelId, String userId){
+        return ratingService.createRating(ratingCreateDTO, novelId, userId);
+    }
 
     public void updateNovel(NovelUpdateDTO novelUpdateDTO, String novelId, String userId) {
        
@@ -77,7 +115,12 @@ public class NovelService {
         }
 
         userService.removeNovelFromUser(userId, novelId);
+        userService.removeCommentFromUser(userId, novelId);
+        userService.removeRatingFromUser(userId, novelId);
         chapterService.deleteAllByNovelId(novelId);
+        commentService.deleteAllByNovelId(novelId);
+        ratingService.deleteAllByNovelId(novelId);
+        
     
         novelRepository.deleteById(novelId);
     }
@@ -124,7 +167,7 @@ public class NovelService {
         novelRepository.save(novel);
     }
 
-    public void addView(String novelId) {
+    public void incrementViews(String novelId) {
         Novel novel = findById(novelId);
         novel.setViews(novel.getViews() + 1);
         novelRepository.save(novel);

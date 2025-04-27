@@ -34,6 +34,10 @@ public class CommentService {
         return commentRepository.findById(commentId).orElseThrow(() -> new ObjectNotFoundException("Comment not found."));
     }
 
+    public List<Comment> findByNovelId(String novelId){
+        return commentRepository.findByNovelId(novelId);
+    }
+
     public Comment createComment(CommentCreateDTO commentCreateDTO, String authorId, String novelId) {
 
         User user = userService.findById(authorId);
@@ -95,5 +99,10 @@ public class CommentService {
         comment.setDislikes(comment.getDislikedList().size());
     
         return commentRepository.save(comment);
+    }
+
+    public void deleteAllByNovelId(String novelId) {
+        List<Comment> list = commentRepository.findByNovelId(novelId);
+        commentRepository.deleteAll(list);
     }
 }

@@ -33,6 +33,10 @@ public class RatingService {
         return ratingRepository.findById(id).orElseThrow(() -> new ObjectNotFoundException("Rating not found."));
     }
 
+    public List<Rating> findByNovelId(String novelId){
+        return ratingRepository.findByNovelId(novelId);
+    }
+
     public Rating createRating(RatingCreateDTO ratingCreateDTO, String novelId, String userId) {
 
         Novel novel = novelService.findById(novelId);
@@ -57,5 +61,10 @@ public class RatingService {
         novelService.removeRatingFromNovel(rating.getNovelId(), ratingId);
         
         ratingRepository.deleteById(ratingId);
+    }
+
+    public void deleteAllByNovelId(String novelId) {
+        List<Rating> list = ratingRepository.findByNovelId(novelId);
+        ratingRepository.deleteAll(list);
     }
 }

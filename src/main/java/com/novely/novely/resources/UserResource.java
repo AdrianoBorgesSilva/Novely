@@ -60,7 +60,7 @@ public class UserResource {
         return ResponseEntity.ok(new UserDTO(user));
     }
 
-    @PostMapping("/register")
+    @PostMapping("/auth/signup")
     public ResponseEntity<Void> createUser(@RequestBody @Valid UserSignUpDTO userSignUpDTO) {
        
         User user = userService.createUser(userSignUpDTO);
@@ -69,7 +69,7 @@ public class UserResource {
         return ResponseEntity.created(uri).build();
     }
 
-    @PostMapping("/login")
+    @PostMapping("/auth/login")
     public ResponseEntity<LoginResponseDTO> login(@RequestBody @Valid UserLoginDTO userLogin) {
         
         authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(userLogin.getEmail(), userLogin.getPassword()));
@@ -79,7 +79,7 @@ public class UserResource {
         return ResponseEntity.ok(new LoginResponseDTO(token));
     }
 
-    @PutMapping("/update/{userId}")
+    @PutMapping("/{userId}")
     public ResponseEntity<Void> update(@RequestBody @Valid UserUpdateDTO userUpdateDTO, @PathVariable String userId, Authentication authentication) {
         
         User user = userService.findByEmail(authentication.getName());
@@ -88,7 +88,7 @@ public class UserResource {
         return ResponseEntity.noContent().build();
     }
 
-    @DeleteMapping("/delete/{userId}")
+    @DeleteMapping("/{userId}")
     public ResponseEntity<Void> delete(@PathVariable String userId, Authentication authentication) {
         userService.deleteUser(authentication.getName(), userId);
         return ResponseEntity.noContent().build();
