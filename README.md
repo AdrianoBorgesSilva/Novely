@@ -1,5 +1,5 @@
 # Novely
-Uma robusta API RESTful para gerenciamento de uma plataforma online de novels, construída com Spring Boot e MongoDB. Ela oferece suporte a cadastro/login de usuários com segurança baseada em JWT, operações CRUD para novels, capítulos, comentários e avaliações, além dos recursos de "favoritar" e "super-favoritar". O projeto segue princípios de clean architecture — utilizando DTOs para as requisições e respostas, modelos de domínio anotados para MongoDB, camada de serviços e repositórios, e tratamento centralizado de exceções — permitindo fácil extensão ou implantação via Docker.
+Uma API RESTful robusta para gerenciamento de uma plataforma online de novels, construída com Spring Boot, persistência em MongoDB e segurança baseada em JWT, que oferece cadastro/login de usuários, operações CRUD para novels, capítulos, comentários e avaliações, além de recursos de “favoritar” e “super‑favoritar”, seguindo princípios de arquitetura em camadas — com DTOs para requisições/respostas, entidades anotadas para MongoDB, camada de serviços e repositórios, e tratamento centralizado de exceções — e preparada para fácil extensão ou implantação via Docker.
 
 ## Funcionalidades
 
