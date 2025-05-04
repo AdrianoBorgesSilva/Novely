@@ -3,7 +3,6 @@ package com.novely.novely.service;
 import java.time.LocalDateTime;
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.novely.novely.domain.Chapter;
@@ -17,14 +16,13 @@ import com.novely.novely.repository.ChapterRepository;
 @Service
 public class ChapterService {
     
-    @Autowired
-    ChapterRepository chapterRepository;
+    private final ChapterRepository chapterRepository;
+    private final NovelService novelService;
 
-    @Autowired
-    UserService userService;
-
-    @Autowired
-    NovelService novelService;
+    public ChapterService(ChapterRepository chapterRepository, NovelService novelService) {
+        this.chapterRepository = chapterRepository;
+        this.novelService = novelService;
+    }
 
     public List<Chapter> findAll() {
         return chapterRepository.findAll();

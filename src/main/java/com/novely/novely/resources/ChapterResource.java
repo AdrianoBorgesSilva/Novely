@@ -3,7 +3,6 @@ package com.novely.novely.resources;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -27,11 +26,13 @@ import jakarta.validation.Valid;
 @RequestMapping(path = "/chapters")
 public class ChapterResource {
     
-    @Autowired
-    ChapterService chapterService;
-
-    @Autowired
-    UserService userService;
+    private final ChapterService chapterService;
+    private final UserService userService;
+    
+    public ChapterResource(ChapterService chapterService, UserService userService) {
+        this.chapterService = chapterService;
+        this.userService = userService;
+    }
 
     @GetMapping
     public ResponseEntity<List<ChapterDTO>> findAll() {

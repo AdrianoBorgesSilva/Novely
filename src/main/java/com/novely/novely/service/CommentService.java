@@ -3,7 +3,6 @@ package com.novely.novely.service;
 import java.time.LocalDateTime;
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.novely.novely.domain.Comment;
@@ -17,14 +16,15 @@ import com.novely.novely.repository.CommentRepository;
 @Service
 public class CommentService {
     
-    @Autowired
-    CommentRepository commentRepository;
-
-    @Autowired
-    UserService userService;
-
-    @Autowired
-    NovelService novelService;
+    private final CommentRepository commentRepository;
+    private final UserService userService;
+    private final NovelService novelService;
+    
+    public CommentService(CommentRepository commentRepository, UserService userService, NovelService novelService) {
+        this.commentRepository = commentRepository;
+        this.userService = userService;
+        this.novelService = novelService;
+    }
 
     public List<Comment> findAll() {
         return commentRepository.findAll();

@@ -4,7 +4,6 @@ import java.time.LocalDate;
 import java.util.List;
 import java.util.UUID;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -22,15 +21,15 @@ import com.novely.novely.repository.UserRepository;
 @Service
 public class UserService {
 
-    @Autowired
-    UserRepository userRepository;
+    private final UserRepository userRepository;
+    private final PasswordEncoder passwordEncoder;
+    private final NovelService novelService;
 
-    @Autowired
-    PasswordEncoder passwordEncoder;
-
-    @Autowired
-    @Lazy
-    NovelService novelService;
+    public UserService(UserRepository userRepository, PasswordEncoder passwordEncoder, @Lazy NovelService novelService) {
+        this.userRepository = userRepository;
+        this.passwordEncoder = passwordEncoder;
+        this.novelService = novelService;
+    }
 
     public List<User> findAll() {
         return userRepository.findAll();

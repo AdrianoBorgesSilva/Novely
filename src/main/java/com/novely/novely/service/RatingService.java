@@ -3,7 +3,6 @@ package com.novely.novely.service;
 import java.time.LocalDateTime;
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.novely.novely.domain.Novel;
@@ -16,14 +15,15 @@ import com.novely.novely.repository.RatingRepository;
 @Service
 public class RatingService {
     
-    @Autowired
-    RatingRepository ratingRepository;
+    private final RatingRepository ratingRepository;
+    private final UserService userService;
+    private final NovelService novelService;
 
-    @Autowired
-    UserService userService;
-
-    @Autowired
-    NovelService novelService;
+    public RatingService(RatingRepository ratingRepository, UserService userService, NovelService novelService) {
+        this.ratingRepository = ratingRepository;
+        this.userService = userService;
+        this.novelService = novelService;
+    }
 
     public List<Rating> findAll() {
         return ratingRepository.findAll();

@@ -3,7 +3,6 @@ package com.novely.novely.resources;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -23,11 +22,13 @@ import com.novely.novely.service.UserService;
 @RequestMapping(path = "/comments")
 public class CommentResource {
     
-    @Autowired
-    CommentService commentService;
+    private final CommentService commentService;
+    private final UserService userService;
 
-    @Autowired
-    UserService userService;
+    public CommentResource(CommentService commentService, UserService userService) {
+        this.commentService = commentService;
+        this.userService = userService;
+    }
 
     @GetMapping
     public ResponseEntity<List<CommentDTO>> findAll() {

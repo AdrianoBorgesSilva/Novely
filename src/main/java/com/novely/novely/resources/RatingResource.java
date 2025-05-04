@@ -3,7 +3,6 @@ package com.novely.novely.resources;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -23,11 +22,13 @@ import com.novely.novely.service.UserService;
 @RequestMapping(path = "/ratings")
 public class RatingResource {
     
-    @Autowired
-    RatingService ratingService;
-
-    @Autowired
-    UserService userService;
+    private final RatingService ratingService;
+    private final UserService userService;
+    
+    public RatingResource(RatingService ratingService, UserService userService) {
+        this.ratingService = ratingService;
+        this.userService = userService;
+    }
 
     @GetMapping
     public ResponseEntity<List<RatingDTO>> findAll() {
