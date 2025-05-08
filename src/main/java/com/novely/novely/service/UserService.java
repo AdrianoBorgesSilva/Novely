@@ -48,10 +48,10 @@ public class UserService {
 
     public User findByEmail(String email) {
         
-        User user = userRepository.findByEmail(email).orElseThrow(() -> new ObjectNotFoundException("User not found."));
+        User user = userRepository.findByEmail(email).orElseThrow(() -> new ObjectNotFoundException("User not found"));
         
         if (Boolean.TRUE.equals(user.isDeleted())) {
-            throw new ObjectNotFoundException("User not found.");
+            throw new ObjectNotFoundException("User not found");
         }
 
         return user;
