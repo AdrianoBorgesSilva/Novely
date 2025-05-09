@@ -89,7 +89,10 @@ public class UserResource {
 
     @DeleteMapping("/{userId}")
     public ResponseEntity<Void> delete(@PathVariable String userId, Authentication authentication) {
-        userService.deleteUser(authentication.getName(), userId);
+        
+        User user = userService.findByEmail(authentication.getName());
+        userService.deleteUser(userId, user.getId());
+        
         return ResponseEntity.noContent().build();
     }
 

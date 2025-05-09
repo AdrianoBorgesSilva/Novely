@@ -90,15 +90,15 @@ public class UserService {
         userRepository.save(user);
     }
 
-    public void deleteUser(String requesterEmail, String targetUserId) {
+    public void deleteUser(String userId, String authId) {
         
-        User user = findByEmail(requesterEmail);
+        User user = findById(userId);
 
-        if (!user.getId().equals(targetUserId)) {
+        if (!user.getId().equals(authId)) {
             throw new UnauthorizedActionException("You can not delete this account");
         }
 
-        delete(targetUserId);
+        delete(userId);
     }
 
     private void delete(String userId) {
