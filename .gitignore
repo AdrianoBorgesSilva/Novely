@@ -86,3 +86,5 @@ dump/
 # Arquivos de sistema
 .DS_Store
 Thumbs.db
+src/main/resources/app.key
+src/main/resources/app.pub

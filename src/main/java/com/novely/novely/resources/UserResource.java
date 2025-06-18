@@ -24,9 +24,7 @@ import com.novely.novely.dto.UserDTO;
 import com.novely.novely.dto.UserLoginDTO;
 import com.novely.novely.dto.UserSignUpDTO;
 import com.novely.novely.dto.UserUpdateDTO;
-import com.novely.novely.security.CustomUserDetails;
-import com.novely.novely.security.CustomUserDetailsService;
-import com.novely.novely.security.JwtUtil;
+import com.novely.novely.security.AuthenticationService;
 import com.novely.novely.service.UserService;
 
 import jakarta.validation.Valid;
@@ -36,15 +34,13 @@ import jakarta.validation.Valid;
 public class UserResource {
 
     private final UserService userService;
+    private final AuthenticationService authenticationService;
     private final AuthenticationManager authenticationManager;
-    private final JwtUtil jwtUtil;
-    private final CustomUserDetailsService userDetailsService;
 
-    public UserResource(UserService userService, AuthenticationManager authenticationManager, JwtUtil jwtUtil, CustomUserDetailsService userDetailsService) {
+    public UserResource(UserService userService, AuthenticationService authenticationService, AuthenticationManager authenticationManager) {
         this.userService = userService;
+        this.authenticationService = authenticationService;
         this.authenticationManager = authenticationManager;
-        this.jwtUtil = jwtUtil;
-        this.userDetailsService = userDetailsService;
     }
 
     @GetMapping
@@ -71,9 +67,9 @@ public class UserResource {
     @PostMapping("/auth/login")
     public ResponseEntity<LoginResponseDTO> login(@RequestBody @Valid UserLoginDTO userLogin) {
         
-        authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(userLogin.getEmail(), userLogin.getPassword()));
-        CustomUserDetails userDetails = (CustomUserDetails) userDetailsService.loadUserByUsername(userLogin.getEmail());
-        String token = jwtUtil.generateToken(userDetails);
+        Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(userLogin.getEmail(), userLogin.getPassword()));
+      
+        String token = authenticationService.authenticate(authentication);
 
         return ResponseEntity.ok(new LoginResponseDTO(token));
     }
