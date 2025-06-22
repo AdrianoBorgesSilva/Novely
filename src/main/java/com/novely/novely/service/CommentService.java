@@ -35,6 +35,9 @@ public class CommentService {
     }
 
     public List<Comment> findByNovelId(String novelId){
+        
+        novelService.findById(novelId);
+
         return commentRepository.findByNovelId(novelId);
     }
 

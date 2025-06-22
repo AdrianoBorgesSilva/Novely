@@ -34,6 +34,9 @@ public class RatingService {
     }
 
     public List<Rating> findByNovelId(String novelId){
+
+        novelService.findById(novelId);
+
         return ratingRepository.findByNovelId(novelId);
     }
 

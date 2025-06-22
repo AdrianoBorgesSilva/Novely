@@ -33,6 +33,9 @@ public class ChapterService {
     }
 
     public List<Chapter> findByNovelId(String novelId) {
+        
+        novelService.findById(novelId);
+
         return chapterRepository.findByNovelId(novelId);
     }
 
