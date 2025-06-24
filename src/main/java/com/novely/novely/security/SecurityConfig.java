@@ -79,7 +79,7 @@ public class SecurityConfig {
         
         http.csrf(csrf -> csrf.disable())
             .authorizeHttpRequests(auth -> auth
-                .requestMatchers("/users","/users/auth/signup", "/users/auth/login", "/novels", "/chapters", "/comments", "/ratings", "/swagger-ui/**", "/v3/api-docs/**", "swagger-ui.html").permitAll()
+                .requestMatchers("/users","/users/auth/signup", "/users/auth/login", "/novels", "/chapters", "/comments", "/ratings", "/swagger-ui/**", "/v3/api-docs/**", "/swagger-ui.html").permitAll()
                 .requestMatchers(HttpMethod.GET, "/users/*", "/novels/*", "/chapters/*").permitAll()
                 .requestMatchers(HttpMethod.PATCH, "/novels/*/views").permitAll()
                 .anyRequest().authenticated()
