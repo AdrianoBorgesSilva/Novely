@@ -31,7 +31,7 @@ import jakarta.validation.Valid;
 @RestController
 @RequestMapping(path = "/chapters")
 @SecurityRequirement(name = SecurityConfig.SECURITY)
-@Tag(name = "Capítulos", description = "Controller responsável pelas ações relacionadas aos capítulos")
+@Tag(name = "Chapters", description = "Controller responsible for actions related to chapters")
 public class ChapterResource {
     
     private final ChapterService chapterService;
@@ -43,10 +43,10 @@ public class ChapterResource {
     }
 
     @GetMapping
-    @Operation(summary = "Listar todos os capítulos", description = "Retorna todos os capítulos cadastrados no sistema")
+    @Operation(summary = "List all chapters", description = "Returns all chapters registered in the system")
     @ApiResponses(value = {
-        @ApiResponse(responseCode = "200", description = "Capítulos retornados com sucesso"),
-        @ApiResponse(responseCode = "500", description = "Erro interno no servidor")
+        @ApiResponse(responseCode = "200", description = "Chapters returned successfully"),
+        @ApiResponse(responseCode = "500", description = "Internal server error")
     })
     public ResponseEntity<List<ChapterDTO>> findAll() {
         List<ChapterDTO> list = chapterService.findAll().stream().map(ChapterDTO::new).collect(Collectors.toList());
@@ -54,11 +54,11 @@ public class ChapterResource {
     }
 
     @GetMapping(value = "/{chapterId}")
-    @Operation(summary = "Retornar um único capítulo", description = "Retorna os dados do capítulo especificado pelo ID")
+    @Operation(summary = "Get a single chapter", description = "Returns the data for the chapter specified by ID")
     @ApiResponses(value = {
-        @ApiResponse(responseCode = "200", description = "Capítulo retornado com sucesso"),
-        @ApiResponse(responseCode = "404", description = "Capítulo não encontrado"),
-        @ApiResponse(responseCode = "500", description = "Erro interno no servidor")
+        @ApiResponse(responseCode = "200", description = "Chapter returned successfully"),
+        @ApiResponse(responseCode = "404", description = "Chapter not found"),
+        @ApiResponse(responseCode = "500", description = "Internal server error")
     })
     public ResponseEntity<ChapterDTO> findById(@PathVariable String chapterId) {
         Chapter chapter = chapterService.findById(chapterId);
@@ -66,13 +66,13 @@ public class ChapterResource {
     }
 
     @PatchMapping(value = "/{chapterId}")
-    @Operation(summary = "Atualizar capítulo", description = "Atualização de um capítulo especificado pelo ID")
+    @Operation(summary = "Update chapter", description = "Update a chapter specified by ID")
     @ApiResponses(value = {
-        @ApiResponse(responseCode = "200", description = "Capítulo atualizado com sucesso"),
-        @ApiResponse(responseCode = "404", description = "Capítulo não encontrado"),
-        @ApiResponse(responseCode = "401", description = "Não autenticado (token ausente ou inválido)"),
-        @ApiResponse(responseCode = "403", description = "Acesso proibido (sem permissão para acessar este recurso)"),
-        @ApiResponse(responseCode = "500", description = "Erro interno no servidor")
+        @ApiResponse(responseCode = "200", description = "Chapter updated successfully"),
+        @ApiResponse(responseCode = "404", description = "Chapter not found"),
+        @ApiResponse(responseCode = "401", description = "Unauthenticated (missing or invalid token)"),
+        @ApiResponse(responseCode = "403", description = "Forbidden (no permission to access this resource)"),
+        @ApiResponse(responseCode = "500", description = "Internal server error")
     })
     public ResponseEntity<Void> updateChapter(@RequestBody @Valid ChapterUpdateDTO chapterUpdateDTO, @PathVariable String chapterId, Authentication authentication) {
 
@@ -83,13 +83,13 @@ public class ChapterResource {
     }
 
     @DeleteMapping(value = "/{chapterId}")
-    @Operation(summary = "Deletar um capítulo", description = "Deleta um capítulo e remove sua referência na novel associada")
+    @Operation(summary = "Delete a chapter", description = "Deletes a chapter and removes its reference in the associated Novel")
     @ApiResponses(value = {
-        @ApiResponse(responseCode = "204", description = "Capítulo deletado com sucesso"),
-        @ApiResponse(responseCode = "404", description = "Capítulo não encontrado"),
-        @ApiResponse(responseCode = "401", description = "Não autenticado (token ausente ou inválido)"),
-        @ApiResponse(responseCode = "403", description = "Acesso proibido (sem permissão para acessar este recurso)"),
-        @ApiResponse(responseCode = "500", description = "Erro interno no servidor")
+        @ApiResponse(responseCode = "204", description = "Chapter deleted successfully"),
+        @ApiResponse(responseCode = "404", description = "Chapter not found"),
+        @ApiResponse(responseCode = "401", description = "Unauthenticated (missing or invalid token)"),
+        @ApiResponse(responseCode = "403", description = "Forbidden (no permission to access this resource)"),
+        @ApiResponse(responseCode = "500", description = "Internal server error")
     })
     public ResponseEntity<Void> deleteChapter(@PathVariable String chapterId, Authentication authentication) {
         

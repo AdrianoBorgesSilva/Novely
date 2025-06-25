@@ -28,7 +28,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 @RestController
 @RequestMapping(path = "/ratings")
 @SecurityRequirement(name = SecurityConfig.SECURITY)
-@Tag(name = "Avaliações", description = "Controller responsável pelas ações relacionadas as avaliações")
+@Tag(name = "Ratings", description = "Controller responsible for actions related to ratings")
 public class RatingResource {
     
     private final RatingService ratingService;
@@ -40,10 +40,10 @@ public class RatingResource {
     }
 
     @GetMapping
-    @Operation(summary = "Listar todas as avaliações", description = "Retorna todas as avaliações cadastradas no sistema")
+    @Operation(summary = "List all reviews", description = "Returns all ratings registered in the system")
     @ApiResponses(value = {
-        @ApiResponse(responseCode = "200", description = "Avaliações retornadas com sucesso"),
-        @ApiResponse(responseCode = "500", description = "Erro no servidor")
+        @ApiResponse(responseCode = "200", description = "Reviews returned successfully"),
+        @ApiResponse(responseCode = "500", description = "Internal server error")
     })
     public ResponseEntity<List<RatingDTO>> findAll() {
         List<RatingDTO> list = ratingService.findAll().stream().map(RatingDTO::new).collect(Collectors.toList());
@@ -51,13 +51,13 @@ public class RatingResource {
     }
 
     @GetMapping(value = "/{ratingId}")
-    @Operation(summary = "Buscar avaliação por ID", description = "Retorna os dados da avaliação especificada por ID")
+    @Operation(summary = "Return a single rating", description = "Returns the rating data specified by ID")
     @ApiResponses(value = {
-        @ApiResponse(responseCode = "200", description = "Avaliação retornada com sucesso"),
-        @ApiResponse(responseCode = "404", description = "Avaliação não encontrada"),
-        @ApiResponse(responseCode = "401", description = "Não autenticado (token ausente ou inválido)"),
-        @ApiResponse(responseCode = "403", description = "Acesso proibido (sem permissão para acessar este recurso)"),
-        @ApiResponse(responseCode = "500", description = "Erro no servidor")
+        @ApiResponse(responseCode = "200", description = "Rating returned successfully"),
+        @ApiResponse(responseCode = "404", description = "Rating not found"),
+        @ApiResponse(responseCode = "401", description = "Unauthenticated (missing or invalid token)"),
+        @ApiResponse(responseCode = "403", description = "Forbidden (no permission to access this resource)"),
+        @ApiResponse(responseCode = "500", description = "Internal server error")
     })
     public ResponseEntity<RatingDTO> findById(@PathVariable String ratingId) {
         Rating rating = ratingService.findById(ratingId);
@@ -65,13 +65,13 @@ public class RatingResource {
     }   
 
     @DeleteMapping(value = "/{ratingId}")
-    @Operation(summary = "Deletar uma avaliação", description = "Deleta uma avaliação e remove sua referência na Novel associada")
+    @Operation(summary = "Delete a rating", description = "Deletes a rating and removes its reference in the associated Novel")
     @ApiResponses(value = {
-        @ApiResponse(responseCode = "204", description = "Avaliação deletada com sucesso"),
-        @ApiResponse(responseCode = "404", description = "Avaliação não encontrada"),
-        @ApiResponse(responseCode = "401", description = "Não autenticado (token ausente ou inválido)"),
-        @ApiResponse(responseCode = "403", description = "Acesso proibido (sem permissão para acessar este recurso)"),
-        @ApiResponse(responseCode = "500", description = "Erro no servidor")
+        @ApiResponse(responseCode = "204", description = "Rating deleted successfully"),
+        @ApiResponse(responseCode = "404", description = "Rating not found"),
+        @ApiResponse(responseCode = "401", description = "Unauthenticated (missing or invalid token)"),
+        @ApiResponse(responseCode = "403", description = "Forbidden (no permission to access this resource)"),
+        @ApiResponse(responseCode = "500", description = "Internal server error")
     })
     public ResponseEntity<Void> deleteRating(@PathVariable String ratingId, Authentication authentication) {
         

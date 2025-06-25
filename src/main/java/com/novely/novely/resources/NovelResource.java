@@ -49,7 +49,7 @@ import jakarta.validation.Valid;
 @RestController
 @RequestMapping(path = "/novels")
 @SecurityRequirement(name = SecurityConfig.SECURITY)
-@Tag(name = "Novels", description = "Controller responsável pelas ações relacionadas as Novels")
+@Tag(name = "Novels", description = "Controller responsible for actions related to Novels")
 public class NovelResource {
 
     private final UserService userService;
@@ -71,10 +71,10 @@ public class NovelResource {
     }
 
     @GetMapping
-    @Operation(summary = "Listar todas as Novels", description = "Retorna uma lista contendo todas as Novels")
+    @Operation(summary = "List all Novels", description = "Returns a list of all Novels")
     @ApiResponses(value = {
-        @ApiResponse(responseCode = "200", description = "Novels retornadas com sucesso"),
-        @ApiResponse(responseCode = "500", description = "Erro interno no servidor")
+        @ApiResponse(responseCode = "200", description = "Novels returned successfully"),
+        @ApiResponse(responseCode = "500", description = "Internal server error")
     })
     public ResponseEntity<List<NovelDTO>> findAll() {
         List<NovelDTO> list = novelService.findAll().stream().map(NovelDTO::new).collect(Collectors.toList());
@@ -82,11 +82,11 @@ public class NovelResource {
     }
 
     @GetMapping(value = "/{novelId}")
-    @Operation(summary = "Retornar uma única Novel", description = "Retorna uma Novel correspondente ao ID fornecido")
+    @Operation(summary = "Get a single Novel", description = "Returns the Novel corresponding to the provided ID")
     @ApiResponses(value = {
-        @ApiResponse(responseCode = "200", description = "Novel retornada com sucesso"),
-        @ApiResponse(responseCode = "404", description = "Novel não encontrada"),
-        @ApiResponse(responseCode = "500", description = "Erro interno no servidor")
+        @ApiResponse(responseCode = "200", description = "Novel returned successfully"),
+        @ApiResponse(responseCode = "404", description = "Novel not found"),
+        @ApiResponse(responseCode = "500", description = "Internal server error")
     })
     public ResponseEntity<NovelDTO> findById(@PathVariable String novelId) {
         Novel novel = novelService.findById(novelId);
@@ -94,13 +94,13 @@ public class NovelResource {
     }
 
     @GetMapping(value = "/{novelId}/chapters")
-    @Operation(summary = "Listar capítulos de uma Novel", description = "Retorna todos os capítulos da Novel especificada")
+    @Operation(summary = "List chapters of a Novel", description = "Returns all chapters of the specified Novel")
     @ApiResponses(value = {
-        @ApiResponse(responseCode = "200", description = "Capítulos retornados com sucesso"),
-        @ApiResponse(responseCode = "404", description = "Novel não encontrada"),
-        @ApiResponse(responseCode = "401", description = "Não autenticado (token ausente ou inválido)"),
-        @ApiResponse(responseCode = "403", description = "Acesso proibido (sem permissão para acessar este recurso)"),
-        @ApiResponse(responseCode = "500", description = "Erro interno no servidor")
+        @ApiResponse(responseCode = "200", description = "Chapters returned successfully"),
+        @ApiResponse(responseCode = "404", description = "Novel not found"),
+        @ApiResponse(responseCode = "401", description = "Unauthenticated (missing or invalid token)"),
+        @ApiResponse(responseCode = "403", description = "Forbidden (no permission to access this resource)"),
+        @ApiResponse(responseCode = "500", description = "Internal server error")
     })
     public ResponseEntity<List<ChapterDTO>> findChaptersFromNovel(@PathVariable String novelId) {
         List<ChapterDTO> list = chapterService.findByNovelId(novelId).stream().map(ChapterDTO::new).collect(Collectors.toList());
@@ -108,13 +108,13 @@ public class NovelResource {
     }
 
     @GetMapping(value = "/{novelId}/comments")
-    @Operation(summary = "Listar comentários de uma Novel", description = "Retorna todos os comentários da Novel especificada")
+    @Operation(summary = "List comments of a Novel", description = "Returns all comments of the specified Novel")
     @ApiResponses(value = {
-        @ApiResponse(responseCode = "200", description = "Comentários retornados com sucesso"),
-        @ApiResponse(responseCode = "404", description = "Novel não encontrada"),
-        @ApiResponse(responseCode = "401", description = "Não autenticado (token ausente ou inválido)"),
-        @ApiResponse(responseCode = "403", description = "Acesso proibido (sem permissão para acessar este recurso)"),
-        @ApiResponse(responseCode = "500", description = "Erro interno no servidor")
+        @ApiResponse(responseCode = "200", description = "Comments returned successfully"),
+        @ApiResponse(responseCode = "404", description = "Novel not found"),
+        @ApiResponse(responseCode = "401", description = "Unauthenticated (missing or invalid token)"),
+        @ApiResponse(responseCode = "403", description = "Forbidden (no permission to access this resource)"),
+        @ApiResponse(responseCode = "500", description = "Internal server error")
     })
     public ResponseEntity<List<CommentDTO>> findCommentsFromNovel(@PathVariable String novelId) {
         List<CommentDTO> list = commentService.findByNovelId(novelId).stream().map(CommentDTO::new).collect(Collectors.toList());
@@ -122,13 +122,13 @@ public class NovelResource {
     }
 
     @GetMapping(value = "/{novelId}/ratings")
-    @Operation(summary = "Listar avaliações de uma Novel", description = "Retorna todas as avaliações da Novel especificada")
+    @Operation(summary = "List ratings of a Novel", description = "Returns all ratings of the specified Novel")
     @ApiResponses(value = {
-        @ApiResponse(responseCode = "200", description = "Avaliações retornadas com sucesso"),
-        @ApiResponse(responseCode = "404", description = "Novel não encontrada"),
-        @ApiResponse(responseCode = "401", description = "Não autenticado (token ausente ou inválido)"),
-        @ApiResponse(responseCode = "403", description = "Acesso proibido (sem permissão para acessar este recurso)"),
-        @ApiResponse(responseCode = "500", description = "Erro interno no servidor")
+        @ApiResponse(responseCode = "200", description = "Ratings returned successfully"),
+        @ApiResponse(responseCode = "404", description = "Novel not found"),
+        @ApiResponse(responseCode = "401", description = "Unauthenticated (missing or invalid token)"),
+        @ApiResponse(responseCode = "403", description = "Forbidden (no permission to access this resource)"),
+        @ApiResponse(responseCode = "500", description = "Internal server error")
     })
     public ResponseEntity<List<RatingDTO>> findRatingsFromNovel(@PathVariable String novelId) {
         List<RatingDTO> list = ratingService.findByNovelId(novelId).stream().map(RatingDTO::new).collect(Collectors.toList());
@@ -136,13 +136,13 @@ public class NovelResource {
     }
 
     @PostMapping
-    @Operation(summary = "Criar uma Novel", description = "Cria uma nova Novel associada ao usuário autenticado")
+    @Operation(summary = "Create a Novel", description = "Creates a new Novel associated with the authenticated user")
     @ApiResponses(value = {
-        @ApiResponse(responseCode = "201", description = "Novel criada com sucesso"),
-        @ApiResponse(responseCode = "400", description = "Dados inválidos ou erro de validação"),
-        @ApiResponse(responseCode = "401", description = "Não autenticado (token ausente ou inválido)"),
-        @ApiResponse(responseCode = "403", description = "Acesso proibido (sem permissão para acessar este recurso)"),
-        @ApiResponse(responseCode = "500", description = "Erro interno no servidor")
+        @ApiResponse(responseCode = "201", description = "Novel created successfully"),
+        @ApiResponse(responseCode = "400", description = "Invalid data or validation error"),
+        @ApiResponse(responseCode = "401", description = "Unauthenticated (missing or invalid token)"),
+        @ApiResponse(responseCode = "403", description = "Forbidden (no permission to access this resource)"),
+        @ApiResponse(responseCode = "500", description = "Internal server error")
     })
     public ResponseEntity<Void> createNovel(@RequestBody @Valid NovelCreateDTO novelCreateDTO, Authentication authentication){
         
@@ -154,14 +154,14 @@ public class NovelResource {
     }
 
     @PostMapping(value = "/{novelId}/chapters")
-    @Operation(summary = "Criar um capítulo", description = "Cria um novo capítulo associado à Novel")
+    @Operation(summary = "Create a chapter", description = "Creates a new chapter associated with the Novel")
     @ApiResponses(value = {
-        @ApiResponse(responseCode = "201", description = "Capítulo criado com sucesso"),
-        @ApiResponse(responseCode = "400", description = "Dados inválidos ou erro de validação"),
-        @ApiResponse(responseCode = "404", description = "Novel não encontrada"),
-        @ApiResponse(responseCode = "401", description = "Não autenticado (token ausente ou inválido)"),
-        @ApiResponse(responseCode = "403", description = "Acesso proibido (sem permissão para acessar este recurso)"),
-        @ApiResponse(responseCode = "500", description = "Erro interno no servidor")
+        @ApiResponse(responseCode = "201", description = "Chapter created successfully"),
+        @ApiResponse(responseCode = "400", description = "Invalid data or validation error"),
+        @ApiResponse(responseCode = "404", description = "Novel not found"),
+        @ApiResponse(responseCode = "401", description = "Unauthenticated (missing or invalid token)"),
+        @ApiResponse(responseCode = "403", description = "Forbidden (no permission to access this resource)"),
+        @ApiResponse(responseCode = "500", description = "Internal server error")
     })
     public ResponseEntity<Void> createChapter(@RequestBody @Valid ChapterCreateDTO chapterDTO, @PathVariable String novelId, Authentication authentication) {
         
@@ -173,14 +173,14 @@ public class NovelResource {
     }
 
     @PostMapping(value = "/{novelId}/comments")
-    @Operation(summary = "Criar um comentário", description = "Cria um novo comentário associado à Novel")
+    @Operation(summary = "Create a comment", description = "Creates a new comment associated with the Novel")
     @ApiResponses(value = {
-        @ApiResponse(responseCode = "201", description = "Comentário criado com sucesso"),
-        @ApiResponse(responseCode = "400", description = "Dados inválidos ou erro de validação"),
-        @ApiResponse(responseCode = "404", description = "Novel não encontrada"),
-        @ApiResponse(responseCode = "401", description = "Não autenticado (token ausente ou inválido)"),
-        @ApiResponse(responseCode = "403", description = "Acesso proibido (sem permissão para acessar este recurso)"),
-        @ApiResponse(responseCode = "500", description = "Erro interno no servidor")
+        @ApiResponse(responseCode = "201", description = "Comment created successfully"),
+        @ApiResponse(responseCode = "400", description = "Invalid data or validation error"),
+        @ApiResponse(responseCode = "404", description = "Novel not found"),
+        @ApiResponse(responseCode = "401", description = "Unauthenticated (missing or invalid token)"),
+        @ApiResponse(responseCode = "403", description = "Forbidden (no permission to access this resource)"),
+        @ApiResponse(responseCode = "500", description = "Internal server error")
     })
     public ResponseEntity<Void> createComment(@RequestBody @Valid CommentCreateDTO commentCreateDTO, @PathVariable String novelId, Authentication authentication) {
 
@@ -192,14 +192,14 @@ public class NovelResource {
     }
 
     @PostMapping(value = "/{novelId}/ratings")
-    @Operation(summary = "Criar uma avaliação", description = "Cria uma nova avaliação associada à Novel")
+    @Operation(summary = "Create a rating", description = "Creates a new rating associated with the Novel")
     @ApiResponses(value = {
-        @ApiResponse(responseCode = "201", description = "Avaliação criada com sucesso"),
-        @ApiResponse(responseCode = "400", description = "Dados inválidos ou erro de validação"),
-        @ApiResponse(responseCode = "404", description = "Novel não encontrada"),
-        @ApiResponse(responseCode = "401", description = "Não autenticado (token ausente ou inválido)"),
-        @ApiResponse(responseCode = "403", description = "Acesso proibido (sem permissão para acessar este recurso)"),
-        @ApiResponse(responseCode = "500", description = "Erro interno no servidor")
+        @ApiResponse(responseCode = "201", description = "Review created successfully"),
+        @ApiResponse(responseCode = "400", description = "Invalid data or validation error"),
+        @ApiResponse(responseCode = "404", description = "Novel not found"),
+        @ApiResponse(responseCode = "401", description = "Unauthenticated (missing or invalid token)"),
+        @ApiResponse(responseCode = "403", description = "Forbidden (no permission to access this resource)"),
+        @ApiResponse(responseCode = "500", description = "Internal server error")
     })
     public ResponseEntity<Void> createRating(@RequestBody @Valid RatingCreateDTO ratingCreateDTO, @PathVariable String novelId, Authentication authentication){
 
@@ -211,13 +211,13 @@ public class NovelResource {
     }
 
     @PatchMapping(value = "/{novelId}")
-    @Operation(summary = "Atualizar Novel", description = "Atualização de uma Novel existente")
+    @Operation(summary = "Update Novel", description = "Updating an existing Novel")
     @ApiResponses(value = {
-        @ApiResponse(responseCode = "200", description = "Novel atualizada com sucesso"),
-        @ApiResponse(responseCode = "404", description = "Novel não encontrada"),
-        @ApiResponse(responseCode = "401", description = "Não autenticado (token ausente ou inválido)"),
-        @ApiResponse(responseCode = "403", description = "Acesso proibido (sem permissão para acessar este recurso)"),
-        @ApiResponse(responseCode = "500", description = "Erro interno no servidor")
+        @ApiResponse(responseCode = "200", description = "Novel updated successfully"),
+        @ApiResponse(responseCode = "404", description = "Novel not found"),
+        @ApiResponse(responseCode = "401", description = "Unauthenticated (missing or invalid token)"),
+        @ApiResponse(responseCode = "403", description = "Forbidden (no permission to access this resource)"),
+        @ApiResponse(responseCode = "500", description = "Internal server error")
     })
     public ResponseEntity<Void> updateNovel(@RequestBody @Valid NovelUpdateDTO novelUpdateDTO, @PathVariable String novelId, Authentication authentication){
         
@@ -228,13 +228,13 @@ public class NovelResource {
     }
 
     @DeleteMapping(value = "/{novelId}")
-    @Operation(summary = "Deletar uma Novel", description = "Deleta uma novel e todos os dados relacionados a ela (como capítulos, comentários, avaliações, etc.)")
+    @Operation(summary = "Delete a Novel", description = "Deletes a novel and all data related to it (such as chapters, comments, ratings, etc.)")
     @ApiResponses(value = {
-        @ApiResponse(responseCode = "204", description = "Novel deletada com sucesso"),
-        @ApiResponse(responseCode = "404", description = "Novel não encontrada"),
-        @ApiResponse(responseCode = "401", description = "Não autenticado (token ausente ou inválido)"),
-        @ApiResponse(responseCode = "403", description = "Acesso proibido (sem permissão para acessar este recurso)"),
-        @ApiResponse(responseCode = "500", description = "Erro interno no servidor")
+        @ApiResponse(responseCode = "204", description = "Novel successfully deleted"),
+        @ApiResponse(responseCode = "404", description = "Novel not found"),
+        @ApiResponse(responseCode = "401", description = "Unauthenticated (missing or invalid token)"),
+        @ApiResponse(responseCode = "403", description = "Forbidden (no permission to access this resource)"),
+        @ApiResponse(responseCode = "500", description = "Internal server error")
     })
     public ResponseEntity<Void> deleteNovel(@PathVariable String novelId, Authentication authentication) {
         
@@ -245,11 +245,11 @@ public class NovelResource {
     }
 
     @PatchMapping("/{novelId}/views")
-    @Operation(summary = "Incrementar visualização", description = "Incrementa o contador de visualizações da novel especificada")
+    @Operation(summary = "Increase view", description = "Increments the view count of the specified novel")
     @ApiResponses(value = {
-        @ApiResponse(responseCode = "200", description = "Visualização incrementada com sucesso"),
-        @ApiResponse(responseCode = "404", description = "Novel não encontrada"),
-        @ApiResponse(responseCode = "500", description = "Erro interno no servidor")
+        @ApiResponse(responseCode = "200", description = "View incremented successfully"),
+        @ApiResponse(responseCode = "404", description = "Novel not found"),
+        @ApiResponse(responseCode = "500", description = "Internal server error")
     })
     public ResponseEntity<Void> incrementViews(@PathVariable String novelId) {
         novelService.incrementViews(novelId);

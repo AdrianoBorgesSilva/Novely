@@ -38,7 +38,7 @@ import jakarta.validation.Valid;
 @RestController
 @RequestMapping("/users")
 @SecurityRequirement(name = SecurityConfig.SECURITY)
-@Tag(name = "Usuários", description = "Controller responsável pelas ações relacionadas aos usuários")
+@Tag(name = "Users", description = "Controller responsible for actions related to users")
 public class UserResource {
 
     private final UserService userService;
@@ -52,10 +52,10 @@ public class UserResource {
     }
 
     @GetMapping
-    @Operation(summary = "Listar todos os usuários", description = "Retorna uma lista contendo todos os usuários")
+    @Operation(summary = "List all users", description = "Returns a list of all users")
     @ApiResponses(value = {
-        @ApiResponse(responseCode = "200", description = "Usuários retornados com sucesso"),
-        @ApiResponse(responseCode = "500", description = "Erro interno no servidor")
+        @ApiResponse(responseCode = "200", description = "Users returned successfully"),
+        @ApiResponse(responseCode = "500", description = "Internal server error")
     })
     public ResponseEntity<List<UserDTO>> findAll() {
         List<UserDTO> users = userService.findAll().stream().map(UserDTO::new).collect(Collectors.toList());
@@ -63,11 +63,11 @@ public class UserResource {
     }
 
     @GetMapping("/{userId}")
-    @Operation(summary = "Retornar um único usuário", description = "Retorna o usuário correspondente ao ID fornecido")
+    @Operation(summary = "Get a single user", description = "Returns the user corresponding to the provided ID")
     @ApiResponses(value = {
-        @ApiResponse(responseCode = "200", description = "Usuário retornado com sucesso"),
-        @ApiResponse(responseCode = "404", description = "Usuário não encontrado"),
-        @ApiResponse(responseCode = "500", description = "Erro interno no servidor")
+        @ApiResponse(responseCode = "200", description = "User returned successfully"),
+        @ApiResponse(responseCode = "404", description = "User not found"),
+        @ApiResponse(responseCode = "500", description = "Internal server error")
     })
     public ResponseEntity<UserDTO> findById(@PathVariable String userId) {
         User user = userService.findById(userId);
@@ -75,11 +75,11 @@ public class UserResource {
     }
 
     @PostMapping("/auth/signup")
-    @Operation(summary = "Criar um usuário", description = "Cria um usuário padrão no banco de dados")
+    @Operation(summary = "Create a user", description = "Creates a default user in the database")
     @ApiResponses(value = {
-        @ApiResponse(responseCode = "201", description = "Usuário criado com sucesso"),
-        @ApiResponse(responseCode = "400", description = "Dados inválidos ou erro de validação"),
-        @ApiResponse(responseCode = "500", description = "Erro interno no servidor")
+        @ApiResponse(responseCode = "201", description = "User created successfully"),
+        @ApiResponse(responseCode = "400", description = "Invalid data or validation error"),
+        @ApiResponse(responseCode = "500", description = "Internal server error")
     })
     public ResponseEntity<Void> createUser(@RequestBody @Valid UserSignUpDTO userSignUpDTO) {
        
@@ -90,11 +90,11 @@ public class UserResource {
     }
 
     @PostMapping("/auth/login")
-    @Operation(summary = "Login de usuário", description = "Login de um usuário a partir de email e senha")
+    @Operation(summary = "User login", description = "User login from email and password")
     @ApiResponses(value = {
-        @ApiResponse(responseCode = "200", description = "Usuário logado, token gerado com sucesso"),
-        @ApiResponse(responseCode = "401", description = "Credenciais inválidas (email ou senha incorretos)"),
-        @ApiResponse(responseCode = "500", description = "Erro interno no servidor")
+        @ApiResponse(responseCode = "200", description = "User logged in, token generated successfully"),
+        @ApiResponse(responseCode = "401", description = "Invalid credentials (incorrect email or password)"),
+        @ApiResponse(responseCode = "500", description = "Internal server error")
     })
     public ResponseEntity<LoginResponseDTO> login(@RequestBody @Valid UserLoginDTO userLogin) {
         
@@ -106,13 +106,13 @@ public class UserResource {
     }
 
     @PatchMapping("/{userId}")
-    @Operation(summary = "Atualizar usuário", description = "Atualização parcial de um usuário existente")
+    @Operation(summary = "Update user", description = "Partial update of an existing user")
     @ApiResponses(value = {
-        @ApiResponse(responseCode = "200", description = "Usuário atualizado com sucesso"),
-        @ApiResponse(responseCode = "404", description = "Usuário não encontrado"),
-        @ApiResponse(responseCode = "401", description = "Não autenticado (token ausente ou inválido)"),
-        @ApiResponse(responseCode = "403", description = "Acesso proibido (sem permissão para acessar este recurso)"),
-        @ApiResponse(responseCode = "500", description = "Erro interno no servidor")
+        @ApiResponse(responseCode = "200", description = "User updated successfully"),
+        @ApiResponse(responseCode = "404", description = "User not found"),
+        @ApiResponse(responseCode = "401", description = "Unauthenticated (missing or invalid token)"),
+        @ApiResponse(responseCode = "403", description = "Forbidden (no permission to access this resource)"),
+        @ApiResponse(responseCode = "500", description = "Internal server error")
     })
     public ResponseEntity<Void> update(@RequestBody @Valid UserUpdateDTO userUpdateDTO, @PathVariable String userId, Authentication authentication) {
         
@@ -123,13 +123,13 @@ public class UserResource {
     }
 
     @DeleteMapping("/{userId}")
-    @Operation(summary = "Deletar um usuário", description = "Soft Delete de um usuário existente")
+    @Operation(summary = "Delete a user", description = "Soft Delete of an existing user")
     @ApiResponses(value = {
-        @ApiResponse(responseCode = "204", description = "Usuário deletado com sucesso"),
-        @ApiResponse(responseCode = "404", description = "Usuário não encontrado"),
-        @ApiResponse(responseCode = "401", description = "Não autenticado (token ausente ou inválido)"),
-        @ApiResponse(responseCode = "403", description = "Acesso proibido (sem permissão para acessar este recurso)"),
-        @ApiResponse(responseCode = "500", description = "Erro interno no servidor")
+        @ApiResponse(responseCode = "204", description = "User deleted successfully"),
+        @ApiResponse(responseCode = "404", description = "User not found"),
+        @ApiResponse(responseCode = "401", description = "Unauthenticated (missing or invalid token)"),
+        @ApiResponse(responseCode = "403", description = "Forbidden (no permission to access this resource)"),
+        @ApiResponse(responseCode = "500", description = "Internal server error")
     })
     public ResponseEntity<Void> delete(@PathVariable String userId, Authentication authentication) {
         
@@ -140,13 +140,13 @@ public class UserResource {
     }
 
     @PostMapping("/{userId}/favorites/{novelId}")
-    @Operation(summary = "Adicionar favorito", description = "Adicionar uma Novel aos favoritos")
+    @Operation(summary = "Add favorite", description = "Add a Novel to favorites")
     @ApiResponses(value = {
-        @ApiResponse(responseCode = "200", description = "Novel adicionada aos favoritos com sucesso"),
-        @ApiResponse(responseCode = "404", description = "Nenhum usuário ou Novel encontrado"),
-        @ApiResponse(responseCode = "401", description = "Não autenticado (token ausente ou inválido)"),
-        @ApiResponse(responseCode = "403", description = "Acesso proibido (sem permissão para acessar este recurso)"),
-        @ApiResponse(responseCode = "500", description = "Erro interno no servidor")
+        @ApiResponse(responseCode = "200", description = "Novel added to favorites successfully"),
+        @ApiResponse(responseCode = "404", description = "No users or Novels found"),
+        @ApiResponse(responseCode = "401", description = "Unauthenticated (missing or invalid token)"),
+        @ApiResponse(responseCode = "403", description = "Forbidden (no permission to access this resource)"),
+        @ApiResponse(responseCode = "500", description = "Internal server error")
     })
     public ResponseEntity<Void> addFavorite(@PathVariable String userId, @PathVariable String novelId, Authentication authentication) {
        
@@ -157,13 +157,13 @@ public class UserResource {
     }
 
     @DeleteMapping("/{userId}/favorites/{novelId}")
-    @Operation(summary = "Remover favorito", description = "Retirar uma Novel dos favoritos")
+    @Operation(summary = "Remove favorite", description = "Remove a Novel from favorites")
     @ApiResponses(value = {
-        @ApiResponse(responseCode = "204", description = "Novel retirada dos favoritos com sucesso"),
-        @ApiResponse(responseCode = "404", description = "Nenhum usuário ou Novel encontrado"),
-        @ApiResponse(responseCode = "401", description = "Não autenticado (token ausente ou inválido)"),
-        @ApiResponse(responseCode = "403", description = "Acesso proibido (sem permissão para acessar este recurso)"),
-        @ApiResponse(responseCode = "500", description = "Erro interno no servidor")
+        @ApiResponse(responseCode = "204", description = "Novel successfully removed from favorites"),
+        @ApiResponse(responseCode = "404", description = "No users or Novels found"),
+        @ApiResponse(responseCode = "401", description = "Unauthenticated (missing or invalid token)"),
+        @ApiResponse(responseCode = "403", description = "Forbidden (no permission to access this resource)"),
+        @ApiResponse(responseCode = "500", description = "Internal server error")
     })
     public ResponseEntity<Void> removeFavorite(@PathVariable String userId, @PathVariable String novelId, Authentication authentication) {
         
@@ -174,13 +174,13 @@ public class UserResource {
     }
 
     @PostMapping("/{userId}/super-favorites/{novelId}")
-    @Operation(summary = "Adicionar superfavorito", description = "Adicionar uma Novel aos superfavoritos")
+    @Operation(summary = "Add super favorite", description = "Add a Novel to super favorites")
     @ApiResponses(value = {
-        @ApiResponse(responseCode = "200", description = "Novel adicionada aos superfavoritos com sucesso"),
-        @ApiResponse(responseCode = "404", description = "Nenhum usuário ou Novel encontrado"),
-        @ApiResponse(responseCode = "401", description = "Não autenticado (token ausente ou inválido)"),
-        @ApiResponse(responseCode = "403", description = "Acesso proibido (sem permissão para acessar este recurso)"),
-        @ApiResponse(responseCode = "500", description = "Erro interno no servidor")
+        @ApiResponse(responseCode = "200", description = "Novel successfully added to super favorites"),
+        @ApiResponse(responseCode = "404", description = "No users or Novels found"),
+        @ApiResponse(responseCode = "401", description = "Unauthenticated (missing or invalid token)"),
+        @ApiResponse(responseCode = "403", description = "Forbidden (no permission to access this resource)"),
+        @ApiResponse(responseCode = "500", description = "Internal server error")
     })
     public ResponseEntity<Void> addSuperFavorite(@PathVariable String userId, @PathVariable String novelId, Authentication authentication) {
         
@@ -191,13 +191,13 @@ public class UserResource {
     }
 
     @DeleteMapping("/{userId}/super-favorites/{novelId}")
-    @Operation(summary = "Remover superfavorito", description = "Retirar uma Novel dos superfavoritos")
+    @Operation(summary = "Remove super favorite", description = "Remove a Novel from super favorites")
     @ApiResponses(value = {
-        @ApiResponse(responseCode = "204", description = "Novel retirada dos superfavoritos com sucesso"),
-        @ApiResponse(responseCode = "404", description = "Nenhum usuário ou Novel encontrado"),
-        @ApiResponse(responseCode = "401", description = "Não autenticado (token ausente ou inválido)"),
-        @ApiResponse(responseCode = "403", description = "Acesso proibido (sem permissão para acessar este recurso)"),
-        @ApiResponse(responseCode = "500", description = "Erro interno no servidor")
+        @ApiResponse(responseCode = "204", description = "Novel successfully removed from super favorites"),
+        @ApiResponse(responseCode = "404", description = "No users or Novels found"),
+        @ApiResponse(responseCode = "401", description = "Unauthenticated (missing or invalid token)"),
+        @ApiResponse(responseCode = "403", description = "Forbidden (no permission to access this resource)"),
+        @ApiResponse(responseCode = "500", description = "Internal server error")
     })
     public ResponseEntity<Void> removeSuperFavorite(@PathVariable String userId, @PathVariable String novelId, Authentication authentication) {
         
