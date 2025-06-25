@@ -1,7 +1,14 @@
 package com.novely.novely.security;
 
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.security.KeyFactory;
 import java.security.interfaces.RSAPrivateKey;
 import java.security.interfaces.RSAPublicKey;
+import java.security.spec.PKCS8EncodedKeySpec;
+import java.security.spec.X509EncodedKeySpec;
+import java.util.Base64;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
@@ -40,10 +47,32 @@ public class SecurityConfig {
     public static final String SECURITY = "bearerAuth";
 
     @Value("${jwt.public.key}")
-    private RSAPublicKey key;
+    private String publicKeyPath;
 
     @Value("${jwt.private.key}")
-    private RSAPrivateKey priv;
+    private String privateKeyPath;
+
+    @Bean
+    public RSAPublicKey rsaPublicKey() throws Exception {
+        String key = Files.readString(Paths.get(publicKeyPath), StandardCharsets.UTF_8);
+        String sanitized = key.replace("-----BEGIN PUBLIC KEY-----", "")
+                              .replace("-----END PUBLIC KEY-----", "")
+                              .replaceAll("\\s+", "");
+        byte[] decoded = Base64.getDecoder().decode(sanitized);
+        X509EncodedKeySpec keySpec = new X509EncodedKeySpec(decoded);
+        return (RSAPublicKey) KeyFactory.getInstance("RSA").generatePublic(keySpec);
+    }
+
+    @Bean
+    public RSAPrivateKey rsaPrivateKey() throws Exception {
+        String key = Files.readString(Paths.get(privateKeyPath), StandardCharsets.UTF_8);
+        String sanitized = key.replace("-----BEGIN PRIVATE KEY-----", "")
+                              .replace("-----END PRIVATE KEY-----", "")
+                              .replaceAll("\\s+", "");
+        byte[] decoded = Base64.getDecoder().decode(sanitized);
+        PKCS8EncodedKeySpec keySpec = new PKCS8EncodedKeySpec(decoded);
+        return (RSAPrivateKey) KeyFactory.getInstance("RSA").generatePrivate(keySpec);
+    }
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
@@ -61,13 +90,13 @@ public class SecurityConfig {
     }
 
     @Bean
-    JwtDecoder jwtDecoder() {
-        return NimbusJwtDecoder.withPublicKey(key).build();
+    JwtDecoder jwtDecoder(RSAPublicKey rsaPublicKey) {
+        return NimbusJwtDecoder.withPublicKey(rsaPublicKey).build();
     }
 
     @Bean
-    JwtEncoder jwtEncoder() {
-        var jwk = new RSAKey.Builder(key).privateKey(priv).build();
+    JwtEncoder jwtEncoder(RSAPublicKey rsaPublicKey, RSAPrivateKey rsaPrivateKey) {
+        var jwk = new RSAKey.Builder(rsaPublicKey).privateKey(rsaPrivateKey).build();
         var jwks = new ImmutableJWKSet<>(new JWKSet(jwk));
         return new NimbusJwtEncoder(jwks);
     }
