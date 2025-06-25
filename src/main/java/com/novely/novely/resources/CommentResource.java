@@ -28,7 +28,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 @RestController
 @RequestMapping(path = "/comments")
 @SecurityRequirement(name = SecurityConfig.SECURITY)
-@Tag(name = "Comentários", description = "Controller responsável pelas ações relacionadas aos comentários")
+@Tag(name = "Comments", description = "Controller responsible for actions related to comments")
 public class CommentResource {
     
     private final CommentService commentService;
@@ -40,10 +40,10 @@ public class CommentResource {
     }
 
     @GetMapping
-    @Operation(summary = "Listar todos os comentários", description = "Retorna todos os comentários cadastrados no sistema")
+    @Operation(summary = "List all comments", description = "Returns all comments registered in the system")
     @ApiResponses(value = {
-        @ApiResponse(responseCode = "200", description = "Comentários retornados com sucesso"),
-        @ApiResponse(responseCode = "500", description = "Erro interno no servidor")
+        @ApiResponse(responseCode = "200", description = "Comments returned successfully"),
+        @ApiResponse(responseCode = "500", description = "Internal server error")
     })
     public ResponseEntity<List<CommentDTO>> findAll() {
        List<CommentDTO> list = commentService.findAll().stream().map(CommentDTO::new).collect(Collectors.toList());
@@ -51,13 +51,13 @@ public class CommentResource {
     }
 
     @GetMapping(value = "/{commentId}")
-    @Operation(summary = "Retornar um único comentário", description = "Retorna os dados do comentário especificado pelo ID")
+    @Operation(summary = "Return a single comment", description = "Returns the comment data specified by ID")
     @ApiResponses(value = {
-        @ApiResponse(responseCode = "200", description = "Comentário retornado com sucesso"),
-        @ApiResponse(responseCode = "404", description = "Comentário não encontrado"),
-        @ApiResponse(responseCode = "401", description = "Não autenticado (token ausente ou inválido)"),
-        @ApiResponse(responseCode = "403", description = "Acesso proibido (sem permissão para acessar este recurso)"),
-        @ApiResponse(responseCode = "500", description = "Erro interno no servidor")
+        @ApiResponse(responseCode = "200", description = "Comment returned successfully"),
+        @ApiResponse(responseCode = "404", description = "Comment not found"),
+        @ApiResponse(responseCode = "401", description = "Unauthenticated (missing or invalid token)"),
+        @ApiResponse(responseCode = "403", description = "Forbidden (no permission to access this resource)"),
+        @ApiResponse(responseCode = "500", description = "Internal server error")
     })
     public ResponseEntity<CommentDTO> findById(@PathVariable String commentId) {
         Comment comment = commentService.findById(commentId);
@@ -65,13 +65,13 @@ public class CommentResource {
     } 
 
     @DeleteMapping(value = "/{commentId}")
-    @Operation(summary = "Deletar um comentário", description = "Deleta um comentário e remove sua referência na novel associada")
+    @Operation(summary = "Delete a comment", description = "Deletes a comment and removes its reference in the associated Novel")
     @ApiResponses(value = {
-        @ApiResponse(responseCode = "204", description = "Comentário deletado com sucesso"),
-        @ApiResponse(responseCode = "404", description = "Comentário não encontrado"),
-        @ApiResponse(responseCode = "401", description = "Não autenticado (token ausente ou inválido)"),
-        @ApiResponse(responseCode = "403", description = "Acesso proibido (sem permissão para acessar este recurso)"),
-        @ApiResponse(responseCode = "500", description = "Erro interno no servidor")
+        @ApiResponse(responseCode = "204", description = "Comment deleted successfully"),
+        @ApiResponse(responseCode = "404", description = "Comment not found"),
+        @ApiResponse(responseCode = "401", description = "Unauthenticated (missing or invalid token)"),
+        @ApiResponse(responseCode = "403", description = "Forbidden (no permission to access this resource)"),
+        @ApiResponse(responseCode = "500", description = "Internal server error")
     })
     public ResponseEntity<Void> deleteComment(@PathVariable String commentId, Authentication authentication) { 
         
@@ -82,13 +82,13 @@ public class CommentResource {
     }
 
     @PatchMapping("/{commentId}/like")
-    @Operation(summary = "Curtir um comentário", description = "Adiciona uma curtida ao comentário especificado")
+    @Operation(summary = "Like a comment", description = "Adds a like to the specified comment")
     @ApiResponses(value = {
-        @ApiResponse(responseCode = "200", description = "Comentário curtido com sucesso"),
-        @ApiResponse(responseCode = "404", description = "Comentário não encontrado"),
-        @ApiResponse(responseCode = "401", description = "Não autenticado (token ausente ou inválido)"),
-        @ApiResponse(responseCode = "403", description = "Acesso proibido (sem permissão para acessar este recurso)"),
-        @ApiResponse(responseCode = "500", description = "Erro interno no servidor")
+        @ApiResponse(responseCode = "200", description = "Comment liked successfully"),
+        @ApiResponse(responseCode = "404", description = "Comment not found"),
+        @ApiResponse(responseCode = "401", description = "Unauthenticated (missing or invalid token)"),
+        @ApiResponse(responseCode = "403", description = "Forbidden (no permission to access this resource)"),
+        @ApiResponse(responseCode = "500", description = "Internal server error")
     })
     public ResponseEntity<Void> likeComment(@PathVariable String commentId, Authentication authentication) {
         
@@ -99,13 +99,13 @@ public class CommentResource {
     }
 
     @PatchMapping("/{commentId}/dislike")
-    @Operation(summary = "Registrar descurtida", description = "Adiciona uma descurtida (downvote) ao comentário especificado")
+    @Operation(summary = "Dislike a comment", description = "Adds a dislike to the specified comment")
     @ApiResponses(value = {
-        @ApiResponse(responseCode = "200", description = "Comentário descurtido com sucesso"),
-        @ApiResponse(responseCode = "404", description = "Comentário não encontrado"),
-        @ApiResponse(responseCode = "401", description = "Não autenticado (token ausente ou inválido)"),
-        @ApiResponse(responseCode = "403", description = "Acesso proibido (sem permissão para acessar este recurso)"),
-        @ApiResponse(responseCode = "500", description = "Erro interno no servidor")
+        @ApiResponse(responseCode = "200", description = "Comment successfully dislike"),
+        @ApiResponse(responseCode = "404", description = "Comment not found"),
+        @ApiResponse(responseCode = "401", description = "Unauthenticated (missing or invalid token)"),
+        @ApiResponse(responseCode = "403", description = "Forbidden (no permission to access this resource)"),
+        @ApiResponse(responseCode = "500", description = "Internal server error")
     })
     public ResponseEntity<Void> dislikeComment(@PathVariable String commentId, Authentication authentication) {
         
