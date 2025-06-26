@@ -1,78 +1,84 @@
 # Novely
-Uma API RESTful robusta para gerenciamento de uma plataforma online de novels, construída com Spring Boot, persistência em MongoDB e segurança baseada em JWT, que oferece cadastro/login de usuários, operações CRUD para novels, capítulos, comentários e avaliações, além de recursos de “favoritar” e “super‑favoritar”, seguindo princípios de arquitetura em camadas — com DTOs para requisições/respostas, entidades anotadas para MongoDB, camada de serviços e repositórios, e tratamento centralizado de exceções — e preparada para fácil extensão ou implantação via Docker.
+A robust RESTful API for managing an online novel platform. It provides user registration/login, full CRUD operations for novels, chapters, comments, and ratings, as well as “favorite” and “super-favorite” features. The architecture follows a layered structure, consisting of Domain, Repository, Service, and Resource (Controller) layers. The API also follows best practices, using DTOs for data transfer, centralized exception handling, Docker, Swagger documentation, and much more.
 
-## Funcionalidades
+## Technologies
+![Java](https://img.shields.io/badge/java-%23ED8B00.svg?style=for-the-badge&logo=openjdk&logoColor=white)
+![Spring](https://img.shields.io/badge/spring-%236DB33F.svg?style=for-the-badge&logo=spring&logoColor=white)
+![MongoDB](https://img.shields.io/badge/MongoDB-%234ea94b.svg?style=for-the-badge&logo=mongodb&logoColor=white)
+![Docker](https://img.shields.io/badge/docker-%230db7ed.svg?style=for-the-badge&logo=docker&logoColor=white)
 
-👤 **Gerenciamento de usuários:** Cadastro, login, atualização de perfil e controle de acesso baseado em função (JWT).
+## Features
 
-📚 **CRUD de novels:** Criar, ler, atualizar e excluir novels; rastrear visualizações, favoritos e super-favoritos.
+👤 **User Management:** Register, login, profile updates and soft delete.
 
-📑 **Gerenciamento de capítulos:** Adicionar, editar e listar capítulos com marcação de tempo.
+📖 **Novel Management:** Create, read, update and delete novels; track views, favorites, and super-favorites.
 
-💬 **Comentários e avaliações:** Usuários podem comentar e avaliar novels.
+📑 **Chapter Management:** List, add, edit and delete.
 
-🔐 **Segurança:** Spring Security com filtro de JWT, UserDetailsService customizado e hashing de senhas.
+💬 **Comments and Ratings:** Users can comment on and rate novels.
 
-✔️ **Validação:** Bean Validation com Hibernate Validator e Jakarta Validation API.
+🔐 **Security:** Spring Security with OAuth2, JWT, and password hashing.
 
-🐳 **Suporte a Docker:** Contêinerização através do Dockerfile incluso.
+✔️ **Validation:** DTO-level validation to prevent mismatched inputs.
 
-## Link Para Testes Online
-🔗 **https://novely.onrender.com**
+🐳 **Docker Support:**  Containerization enabled through the provided Dockerfile.
 
-Use Postman ou qualquer outro ambiente de testes de sua preferência.
+## Testing
 
-## Endpoints Principais
-### Cadastrar Usuário
-**Método:** `POST`
+🔗 **https://novely.onrender.com/swagger-ui/index.html#/**
+
+Since the API is documented using Swagger, I highly recommend testing it through the link above. Alternatively, you can use a platform such as Postman with the following base URL: https://novely.onrender.com
+
+## Key Endpoints
+### Register User
+**Method:** `POST`
 
 **Endpoint:** `api/users/auth/signup`
 
-**Corpo:** ``{"name": "Teste", "email": "teste@gmail.com", "password": "123456"}``
-
+**Body:** 
+  ```json
+    {
+      "name": "Test",
+      "email": "test@gmail.com",
+      "password": "123456"
+    }
+  ```
+---
 ### Login
-**Método:** `POST`
+**Method:** `POST`
 
 **Endpoint:** `api/users/auth/login`
 
-**Corpo:** `{"email": "teste@gmail.com", "password": "123456"}`
-
-### Criar Novel (Autenticado)
-**Método:** `POST`
+**Body:** 
+   ```json
+      {
+        "email": "test@gmail.com",
+        "password": "123456"
+      }
+   ```
+---
+### Create Novel (Authenticated)
+**Method:** `POST`
 
 **Endpoint:** `api/novels`
 
-**Corpo:** `{"title": "Teste", "description": "Apenas um teste", "genre": "FANTASY"}`
+**Body:** 
+  ```json
+    {
+      "title": "The testing tales",
+      "description": "Once, a one-of-a-kind API was committed to GitHub...",
+      "genre": "FANTASY"
+    }
+  ```
+---
+## Error Handling
+Exception handling is centralized in the exception layer using a `ResourceExceptionHandler` to ensure global error management with clear responses and appropriate HTTP status codes.
 
-### Criar Capítulo (Autenticado)
-**Método:** `POST`
-
-**Endpoint:** `api/novels/{novelId}/chapters`
-
-**Corpo:** `{"title": "Teste", "content": "Testando e testando...", "chapterNumber": 1}`
-
-### Criar Comentário (Autenticado)
-**Método:** `POST`
-
-**Endpoint:** `api/novels/{novelId}/comments`
-
-**Corpo:** `{ "content": "Isso é apenas um teste"}`
-
-### Criar Avaliação (Autenticado)
-**Método:** `POST`
-
-**Endpoint:** `api/novels/{novelId}/ratings`
-
-**Corpo:** `{ "rate": 5 }`
-
-## Tratamento de Erros
-O tratamento de exceções é centralizado na camada exception usando um ResourceExceptionHandler para tratamento global, garantindo respostas claras e status HTTP apropriados.
-
-## Licença
-Este projeto é licenciado sob a MIT License. *Sugestões são bem vindas*
+## License
+This project is licensed under the MIT License. *Suggestions are welcome!*
 
 ***
 
-*Às vezes, as pessoas que ninguém imagina que possam fazer algo, são as que fazem coisas que ninguém imagina -* **Alan Turing**
+*Sometimes it is the people no one imagines anything of who do the things that no one can imagine -* **Alan Turing**
 
 
