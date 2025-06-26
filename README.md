@@ -29,6 +29,8 @@ A robust RESTful API for managing an online novel platform. It provides user reg
 
 Since the API is documented using Swagger, I highly recommend testing it through the link above. Alternatively, you can use a platform such as Postman with the following base URL: https://novely.onrender.com
 
+***Note: The API might be in cold start, and responses can take up to 2 minutes***
+
 ## Key Endpoints
 ### Register User
 **Method:** `POST`
@@ -79,6 +81,6 @@ This project is licensed under the MIT License. *Suggestions are welcome!*
 
 ***
 
-*Sometimes it is the people no one imagines anything of who do the things that no one can imagine -* **Alan Turing**
+*"Sometimes it is the people no one imagines anything of who do the things that no one can imagine" -* **Alan Turing**
 
 
